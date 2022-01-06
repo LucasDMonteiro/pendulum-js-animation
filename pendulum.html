@@ -1,0 +1,47 @@
+<style>
+  body { margin: 0; padding: 0; }
+</style>
+<body><canvas id="canv"></canvas></body>
+<script>
+  canvas = document.getElementById('canv')
+  w = canvas.width = document.body.clientWidth
+  h = canvas.height = document.body.clientHeight
+  ctx = canvas.getContext("2d")
+  ctx.strokeStyle = "white"
+  r = 300
+  pivot = { x: w / 2, y: h / 2 }
+
+  count = 0
+  vel = 0.06
+
+  setInterval(() => {
+    ctx.fillStyle = 'rgba(0,0,0, 0.1)'
+    ctx.fillRect(0, 0, w, h)
+
+    ctx.fillStyle = 'white'
+
+    x = r * Math.cos(count)
+    y = r * Math.sin(count)
+    circle = { x: pivot.x - x , y: pivot.y - y }
+
+    if (count > 3.1 || count < 0) vel *= -1
+    count += vel
+
+    // line
+    ctx.beginPath()
+    ctx.moveTo(pivot.x, pivot.y)
+    ctx.lineTo(circle.x, circle.y)
+    ctx.stroke()
+
+    // circle
+    ctx.beginPath()
+    ctx.arc(circle.x, circle.y, 10, 0, Math.PI * 2)
+    ctx.fill()
+
+    // pivot
+    ctx.beginPath()
+    ctx.arc(pivot.x, pivot.y, 3, 0, Math.PI * 2)
+    ctx.fill()
+  }, 1000 / 30)
+
+</script>
